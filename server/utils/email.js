@@ -12,17 +12,42 @@ const transporter = nodemailer.createTransport({
     },
 }); 
 
-exports.sendOtpEmail = async (email, otp ,type) => {
+const sendBookingEmail = async (userEmail, userName, eventTitle) => {
     try {
         const mailOptions = {
-        from: process.env.EMAIL_USER,   
-        to: email,
-        subject: 'Your OTP for Eventora',
-        text: `Your OTP for Eventora is: ${otp}. It will expire in 5 minutes.`,
-    };  
-    await transporter.sendMail(mailOptions);
-    console.log(`OTP email sent to ${email} for ${type}`);
+            from: process.env.EMAIL_USER,
+            to: userEmail,
+            subject: `Booking Confirmed: ${eventTitle}`,
+            html: `
+        <h2>Hi ${userName}!</h2>
+        <p>Your booking for the event <strong>${eventTitle}</strong> is successfully confirmed.</p>
+        <p>Thank you for choosing Eventora.</p>
+      `
+        };
+        await transporter.sendMail(mailOptions);
+        console.log('Email sent successfully to', userEmail);
     } catch (error) {
-        console.error('Error sending OTP email to ${email} for ${type}:', error);
+        console.error('Error sending email:', error);
     }
+};
+
+exports.sendOtpEmail = async (email, otp ,type) => {
+    const sendBookingEmail = async (userEmail, userName, eventTitle) => {
+    try {
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: userEmail,
+            subject: `Booking Confirmed: ${eventTitle}`,
+            html: `
+        <h2>Hi ${userName}!</h2>
+        <p>Your booking for the event <strong>${eventTitle}</strong> is successfully confirmed.</p>
+        <p>Thank you for choosing Eventora.</p>
+      `
+        };
+        await transporter.sendMail(mailOptions);
+        console.log('Email sent successfully to', userEmail);
+    } catch (error) {
+        console.error('Error sending email:', error);
+    }
+};
 };
