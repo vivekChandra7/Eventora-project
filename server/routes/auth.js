@@ -1,14 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const {registerUser, loginUser, verifyOtp} = require('../controllers/authController');
+
+// ✅ FIXED IMPORT NAMES
+const { register, login, verifyOTP } = require('../controllers/authController');
 
 // Register route
-router.post('/register', registerUser);
+router.post('/register', register);
 
 // Login route
-router.post('/login', loginUser);
+router.post('/login', login);
 
 // OTP verification route
-router.get('/verify-otp', verifyOtp);
+router.post('/verify-otp', verifyOTP);
 
-module.exports = router;
+module.exports = router; 
