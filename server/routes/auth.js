@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-// ✅ FIXED IMPORT NAMES
 const { register, login, verifyOTP } = require('../controllers/authController');
 
 // Register route
